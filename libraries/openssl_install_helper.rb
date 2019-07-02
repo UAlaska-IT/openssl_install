@@ -4,6 +4,8 @@
 module OpenSslInstall
   # This module implements helpers that are used for resources
   module Helper
+    BASE_NAME = 'openssl'
+
     def path_to_download_directory(given_directory)
       return given_directory if given_directory
 
@@ -11,9 +13,9 @@ module OpenSslInstall
       return '/var/chef/cache'
     end
 
-    def path_to_download_file(given_path, version)
-      directory = path_to_download_directory(given_path)
-      return File.join(directory, "openssl-#{version}")
+    def path_to_download_file(given_directory, version)
+      directory = path_to_download_directory(given_directory)
+      return File.join(directory, "#{BASE_NAME}-#{version}")
     end
 
     def download_url(version)
@@ -32,12 +34,11 @@ module OpenSslInstall
       return given_directory if given_directory
 
       directory '/var/chef/cache'
-      return "/var/chef/cache/openssl-#{version}"
+      return "/var/chef/cache/#{BASE_NAME}-#{version}"
     end
 
     def extract_archive(new_resource, build_directory, version)
       download_file = download_archive(new_resource.download_dir, version)
-
       poise_archive download_file do
         destination build_directory
         user new_resource.owner
@@ -45,10 +46,18 @@ module OpenSslInstall
       end
     end
 
+    def path_to_install_directory(given_directory, version)
+      return given_directory if given_directory
+
+      directory "/opt/#{BASE_NAME}"
+      directory "/opt/#{BASE_NAME}/#{version}"
+      return "/opt/#{BASE_NAME}/#{version}"
+    end
+
     def openssl_install_directory(given_directory, version)
       return given_directory if given_directory
 
-      return "/opt/openssl/#{version}"
+      return "/opt/#{BASE_NAME}/#{version}"
     end
 
     def create_config_code(install_directory, strict_security)
@@ -61,40 +70,53 @@ module OpenSslInstall
 
     def configure_build(build_directory, install_directory, strict_security)
       code = create_config_code(install_directory, strict_security)
-      bash 'Configure OpenSSL' do
+      bash 'Configure Build' do
         code code
         cwd build_directory
-        creates 'Makefile'
+        creates File.join(build_directory, 'Makefile')
       end
     end
 
-    def compile_and_install(build_directory, install_directory)
-      bash 'Compile OpenSSL' do
+    def check_build_directory(build_directory, version)
+      checksum_file 'Source Checksum' do
+        source_path build_directory
+        target_path "/var/chef/cache/#{BASE_NAME}-#{version}-checksum"
+      end
+    end
+
+    def manage_bin_file(bin_file)
+      file bin_file do
+        action :nothing
+        subscribes :delete, 'checksum_file[Source Checksum]', :immediate
+      end
+    end
+
+    def make_build(build_directory, bin_file)
+      bash 'Compile and Install' do
         code 'make && make install'
         cwd build_directory
-        creates File.join(install_directory, 'bin/openssl')
+        creates bin_file
       end
     end
 
-    def build_binary(build_directory, given_install_directory, strict_security)
-      install_directory = openssl_install_directory(given_install_directory, version)
-      configure_build(build_directory, install_directory, strict_security)
-      compile_and_install(build_directory, install_directory)
+    def compile_and_install(build_directory, install_directory, version)
+      check_build_directory(build_directory, version)
+      bin_file = File.join(install_directory, 'bin/openssl')
+      manage_bin_file(bin_file)
+      make_build(build_directory, bin_file)
     end
 
-    def create_openssl_install(new_resource)
+    def build_binary(build_directory, given_install_directory, version, strict_security)
+      install_directory = path_to_install_directory(given_install_directory, version)
+      configure_build(build_directory, install_directory, strict_security)
+      compile_and_install(build_directory, install_directory, version)
+    end
+
+    def create_install(new_resource)
       version = new_resource.version
       build_directory = path_to_build_directory(new_resource.build_directory, version)
       extract_archive(new_resource, build_directory, version)
-      build_binary(build_directory, new_resource.install_directory, new_resource.strict_security)
-    end
-
-    def openssl_inc_directory(install_directory)
-      return File.join(install_directory, 'include')
-    end
-
-    def openssl_lib_directory(install_directory)
-      return File.join(install_directory, 'lib')
+      build_binary(build_directory, new_resource.install_directory, version, new_resource.strict_security)
     end
   end
 end

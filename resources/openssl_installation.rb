@@ -14,7 +14,7 @@ property :group, String, default: 'root'
 property :strict_security, [true, false], default: true
 
 action :create do
-  create_openssl_install(@new_resource)
+  create_install(@new_resource)
 end
 
 action_class do

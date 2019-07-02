@@ -9,6 +9,7 @@ module OpenSslInstall
     def path_to_download_directory(given_directory)
       return given_directory if given_directory
 
+      directory '/var/chef'
       directory '/var/chef/cache'
       return '/var/chef/cache'
     end
@@ -33,12 +34,13 @@ module OpenSslInstall
     def path_to_build_directory(given_directory, version)
       return given_directory if given_directory
 
+      directory '/var/chef'
       directory '/var/chef/cache'
       return "/var/chef/cache/#{BASE_NAME}-#{version}"
     end
 
     def extract_archive(new_resource, build_directory, version)
-      download_file = download_archive(new_resource.download_dir, version)
+      download_file = download_archive(new_resource.download_directory, version)
       poise_archive download_file do
         destination build_directory
         user new_resource.owner

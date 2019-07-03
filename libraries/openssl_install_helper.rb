@@ -62,12 +62,6 @@ module OpenSslInstall
       return "/opt/#{BASE_NAME}/#{version}"
     end
 
-    def openssl_install_directory(given_directory, version)
-      return given_directory if given_directory
-
-      return "/opt/#{BASE_NAME}/#{version}"
-    end
-
     def create_config_code(install_directory, strict_security)
       code = './config shared'
       code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if strict_security

@@ -19,6 +19,14 @@ module OpenSslInstall
       return "#{BASE_NAME}-#{version}"
     end
 
+    def create_config_code(install_directory, new_resource)
+      code = './config shared'
+      code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
+      code += " --prefix=#{install_directory}"
+      code += " --openssldir=#{install_directory}"
+      return code
+    end
+
     def path_to_download_directory(given_directory)
       return given_directory if given_directory
 
@@ -111,14 +119,6 @@ module OpenSslInstall
       dir = "/opt/#{BASE_NAME}/#{version}"
       directory dir
       return dir
-    end
-
-    def create_config_code(install_directory, new_resource)
-      code = './config shared'
-      code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
-      code += " --prefix=#{install_directory}"
-      code += " --openssldir=#{install_directory}"
-      return code
     end
 
     def configure_build(build_directory, install_directory, user, group, new_resource)

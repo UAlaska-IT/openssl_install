@@ -6,6 +6,14 @@ module OpenSslInstall
   module Helper
     BASE_NAME = 'openssl'
 
+    def archive_file_name(version)
+      return "#{BASE_NAME}-#{version}.tar.gz"
+    end
+
+    def download_url(version)
+      return "https://www.openssl.org/source/#{archive_file_name(version)}"
+    end
+
     def path_to_download_directory(given_directory)
       return given_directory if given_directory
 
@@ -14,18 +22,10 @@ module OpenSslInstall
       return '/var/chef/cache'
     end
 
-    def archive_file_name(version)
-      return "#{BASE_NAME}-#{version}.tar.gz"
-    end
-
     def path_to_download_file(given_directory, version)
       directory = path_to_download_directory(given_directory)
       file = File.join(directory, archive_file_name(version))
       return file
-    end
-
-    def download_url(version)
-      return "https://www.openssl.org/source/#{archive_file_name(version)}"
     end
 
     def download_archive(given_download_dir, version)

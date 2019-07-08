@@ -5,6 +5,7 @@ module OpenSslInstall
   # This module implements helpers that are used for resources
   module Helper
     BASE_NAME = 'openssl'
+    BIN_CREATES_FILE = 'bin/openssl'
 
     def archive_file_name(version)
       return "#{BASE_NAME}-#{version}.tar.gz"
@@ -204,7 +205,7 @@ module OpenSslInstall
 
     def compile_and_install(build_directory, install_directory, user, group, version)
       check_build_directory(build_directory, version)
-      bin_file = File.join(install_directory, 'bin/openssl')
+      bin_file = File.join(install_directory, BIN_CREATES_FILE)
       manage_bin_file(bin_file)
       make_build(build_directory, install_directory, bin_file, user, group)
     end

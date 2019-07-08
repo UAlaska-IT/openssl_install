@@ -11,7 +11,7 @@ module OpenSslInstall
       return "#{BASE_NAME}-#{version}.tar.gz"
     end
 
-    def download_url(version)
+    def download_url(version, _new_resource)
       return "https://www.openssl.org/source/#{archive_file_name(version)}"
     end
 
@@ -33,9 +33,9 @@ module OpenSslInstall
       return file
     end
 
-    def download_archive(given_download_dir, version)
-      download_file = path_to_download_file(given_download_dir, version)
-      url = download_url(version)
+    def download_archive(version, new_resource)
+      download_file = path_to_download_file(new_resource.download_directory, version)
+      url = download_url(version, new_resource)
       remote_file download_file do
         source url
       end
@@ -99,7 +99,7 @@ module OpenSslInstall
     end
 
     def extract_archive(new_resource, build_directory, user, group, version)
-      download_file = download_archive(new_resource.download_directory, new_resource.year, version)
+      download_file = download_archive(version, new_resource)
       manage_source_directory(download_file, version, build_directory, user, group)
       extract_download(download_file, build_directory, user, group)
     end

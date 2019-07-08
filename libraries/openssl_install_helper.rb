@@ -209,9 +209,9 @@ module OpenSslInstall
       make_build(build_directory, install_directory, bin_file, user, group)
     end
 
-    def build_binary(build_directory, given_install_directory, user, group, version, strict_security)
-      install_directory = path_to_install_directory(given_install_directory, version)
-      configure_build(build_directory, install_directory, user, group, strict_security)
+    def build_binary(build_directory, user, group, version, new_resource)
+      install_directory = path_to_install_directory(new_resource.install_directory, version)
+      configure_build(build_directory, install_directory, user, group, new_resource.strict_security)
       compile_and_install(build_directory, install_directory, user, group, version)
     end
 
@@ -221,7 +221,7 @@ module OpenSslInstall
       version = new_resource.version
       build_directory = path_to_build_directory(new_resource.build_directory, version)
       extract_archive(new_resource, build_directory, user, group, version)
-      build_binary(build_directory, new_resource.install_directory, user, group, version, new_resource.strict_security)
+      build_binary(build_directory, user, group, version, new_resource)
     end
   end
 end

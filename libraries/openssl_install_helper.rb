@@ -80,7 +80,7 @@ module OpenSslInstall
     def extract_command(filename)
       return 'unzip -q' if filename.match?(/\.zip/)
 
-      return 'tar xzf' if filename.match?(/\.tar\.gzip/)
+      return 'tar xzf' if filename.match?(/\.tar\.gz/)
 
       raise "Archive not supported: #{filename}"
     end

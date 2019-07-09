@@ -135,15 +135,15 @@ end
 describe file('/var/chef/cache/openssl-1.1.1c/README') do
   it { should exist }
   it { should be_file }
-  it { should be_mode 0o644 }
+  it { should be_mode 0o664 }
   it { should be_owned_by 'root' }
   it { should be_grouped_into 'root' }
 end
 
-describe file('/usr/local/openssl-src/openssl-1.1.0k/README') do
+describe file('/usr/local/openssl-bld/openssl-1.1.0k/README') do
   it { should exist }
   it { should be_file }
-  it { should be_mode 0o644 }
+  it { should be_mode 0o664 }
   it { should be_owned_by 'bud' }
   it { should be_grouped_into 'bud' }
 end

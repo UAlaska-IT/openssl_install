@@ -104,7 +104,7 @@ module OpenSslInstall
         code code
         cwd parent
         # Run as root in case it is installing in directory without write access
-        creates File.join(build_directory, 'README.md')
+        creates File.join(build_directory, 'README')
       end
     end
 

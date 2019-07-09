@@ -5,6 +5,7 @@ module OpenSslInstall
   # This module implements helpers that are used for resources
   module Helper
     BASE_NAME = 'openssl'
+    EXTRACT_CREATES_FILE = 'README'
     BIN_CREATES_FILE = 'bin/openssl'
 
     def archive_file_name(version)
@@ -104,7 +105,7 @@ module OpenSslInstall
         code code
         cwd parent
         # Run as root in case it is installing in directory without write access
-        creates File.join(build_directory, 'README')
+        creates File.join(build_directory, EXTRACT_CREATES_FILE)
       end
     end
 

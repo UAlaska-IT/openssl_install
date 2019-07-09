@@ -13,7 +13,7 @@ directory '/usr/local/openssl'
 user 'bud'
 
 openssl_installation 'No Defaults' do
-  version '1.0.2s'
+  version '1.1.0k'
   download_directory '/usr/local/openssl-dl'
   build_directory '/usr/local/openssl-bld'
   install_directory '/usr/local/openssl'

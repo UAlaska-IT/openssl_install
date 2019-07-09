@@ -41,11 +41,13 @@ module OpenSslInstall
       return file
     end
 
-    def download_archive(version, new_resource)
+    def download_archive(version, owner, group, new_resource)
       download_file = path_to_download_file(new_resource.download_directory, version)
       url = download_url(version, new_resource)
       remote_file download_file do
         source url
+        owner owner
+        group group
       end
       return download_file
     end
@@ -107,7 +109,7 @@ module OpenSslInstall
     end
 
     def extract_archive(new_resource, build_directory, user, group, version)
-      download_file = download_archive(version, new_resource)
+      download_file = download_archive(version, user, group, new_resource)
       manage_source_directory(download_file, version, build_directory, user, group)
       extract_download(download_file, build_directory, user, group)
     end

@@ -2,13 +2,6 @@
 
 node = json('/opt/chef/run_record/last_chef_run_node.json')['automatic']
 
-dev =
-  if node['platform_family'] == 'debian'
-    'dev'
-  else
-    'devel'
-  end
-
 describe package('gcc') do
   it { should be_installed }
 end

@@ -59,7 +59,15 @@ This cookbook provides no recipes.
 Custom resources can be used as below.
 
 ```ruby
-
+openssl_installation 'No Defaults' do
+  version '1.1.0k'
+  download_directory '/usr/local/openssl-dl'
+  build_directory '/usr/local/openssl-bld'
+  install_directory '/usr/local/openssl'
+  owner 'some-dudette'
+  group 'some-dudettes'
+  strict_security false
+end
 ```
 
 ## Development

@@ -215,7 +215,7 @@ describe bash('/opt/openssl/1.1.1c/bin/openssl ciphers -v') do
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/TLSv1\.2/) }
   its(:stdout) { should_not match(/TLSv1\.1/) }
-  its(:stdout) { should_not match(/TLSv1\.0/) }
+  its(:stdout) { should match(/TLSv1\s/) }
   its(:stdout) { should_not match(/SSLv3/) }
   its(:stdout) { should_not match(/SSLv2/) }
   its(:stdout) { should_not match(/SSLv1/) }
@@ -226,7 +226,7 @@ describe bash('/usr/local/openssl/bin/openssl ciphers -v') do
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/TLSv1\.2/) }
   its(:stdout) { should_not match(/TLSv1\.1/) }
-  its(:stdout) { should match(/TLSv1\.0/) }
+  its(:stdout) { should match(/TLSv1\s/) }
   its(:stdout) { should_not match(/SSLv3/) }
   its(:stdout) { should_not match(/SSLv2/) }
   its(:stdout) { should_not match(/SSLv1/) }

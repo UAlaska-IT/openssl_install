@@ -95,8 +95,8 @@ For build_directory, the path given is the _parent_ of the source root that is c
 For example, if build_directory is set to '/usr/local/openssl-src', then the source root will be "/usr/local/openssl-src/openssl-#{version}".
 
 For install_directory, the path given is the root of the install.
-For example, if install_directory is set to '/usr/local/openssl', then the path to the openssl shared library will be '/usr/local/openssl/lib/libssl.so'.
-The lib path must be added to linker configurations (typically use rpath) for dependencies to load the custom libraries.
+For example, if install_directory is set to '/usr/local/openssl', then the path to the OpenSSL shared library will be '/usr/local/openssl/lib/libssl.so'.
+The lib path must be added to linker and runtime configurations (typically use -L and rpath, respectively) for dependents to load the custom libraries.
 
 ## Recipes
 

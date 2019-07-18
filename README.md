@@ -2,11 +2,14 @@
 
 [![License](https://img.shields.io/github/license/ualaska-it/openssl_install.svg)](https://github.com/ualaska-it/openssl_install)
 [![GitHub Tag](https://img.shields.io/github/tag/ualaska-it/openssl_install.svg)](https://github.com/ualaska-it/openssl_install)
+[![Build status](https://ci.appveyor.com/api/projects/status/hqu2xohgdgi1b0wx/branch/master?svg=true)](https://ci.appveyor.com/project/UAlaska/checksum-file/branch/master)
+[![codecov](https://codecov.io/gh/UAlaska-IT/openssl_install/branch/master/graph/badge.svg)](https://codecov.io/gh/UAlaska-IT/openssl_install)
 
 __Maintainer: OIT Systems Engineering__ (<ua-oit-se@alaska.edu>)
 
 ## Purpose
 
+This cookbook provides a single resource that downloads, configures, compiles, and installs OpenSSL.
 
 ## Requirements
 
@@ -36,7 +39,7 @@ Platforms validated via Test Kitchen:
 
 Notes:
 
-* This cookbook should support any recent Windows or Linux variant.
+* This cookbook should support any recent Linux variant.
 
 ### Dependencies
 

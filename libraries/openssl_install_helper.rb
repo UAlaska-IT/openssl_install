@@ -32,8 +32,12 @@ module OpenSslInstall
     def path_to_download_directory(given_directory)
       return given_directory if given_directory
 
-      directory '/var/chef'
-      directory '/var/chef/cache'
+      directory '/var/chef' do
+        mode 0o755
+      end
+      directory '/var/chef/cache' do
+        mode 0o755
+      end
       return '/var/chef/cache'
     end
 
@@ -58,8 +62,12 @@ module OpenSslInstall
       base = archive_root_directory(version)
       return File.join(given_directory, base) if given_directory
 
-      directory '/var/chef'
-      directory '/var/chef/cache'
+      directory '/var/chef' do
+        mode 0o755
+      end
+      directory '/var/chef/cache' do
+        mode 0o755
+      end
       return File.join('/var/chef/cache', base)
     end
 
@@ -119,9 +127,13 @@ module OpenSslInstall
     def path_to_install_directory(given_directory, version)
       return given_directory if given_directory
 
-      directory "/opt/#{BASE_NAME}"
+      directory "/opt/#{BASE_NAME}" do
+        mode 0o755
+      end
       dir = "/opt/#{BASE_NAME}/#{version}"
-      directory dir
+      directory dir do
+        mode 0o755
+      end
       return dir
     end
 

@@ -22,6 +22,7 @@ module OpenSslInstall
 
     def create_config_code(install_directory, new_resource)
       code = './config shared'
+      code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
       code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
       code += " --prefix=#{install_directory}"
       code += " --openssldir=#{install_directory}"

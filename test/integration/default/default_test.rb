@@ -2,8 +2,17 @@
 
 node = json('/opt/chef/run_record/last_chef_run_node.json')['automatic']
 
+base_name = 'openssl'
 curr_ver = '1.1.1c'
 prev_ver = '1.1.0k'
+
+def archive_file(version)
+  return "#{base_name}-#{version}.tar.gz"
+end
+
+def source_dir(version)
+  return "#{base_name}-#{version}"
+end
 
 describe package('gcc') do
   it { should be_installed }
@@ -21,7 +30,7 @@ describe package('make') do
   it { should be_installed }
 end
 
-describe file('/usr/local/openssl-dl') do
+describe file("/usr/local/#{base_name}-dl") do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -29,7 +38,7 @@ describe file('/usr/local/openssl-dl') do
   it { should be_grouped_into 'root' }
 end
 
-describe file('/usr/local/openssl-bld') do
+describe file("/usr/local/#{base_name}-bld") do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -37,7 +46,7 @@ describe file('/usr/local/openssl-bld') do
   it { should be_grouped_into 'root' }
 end
 
-describe file('/usr/local/openssl') do
+describe file("/usr/local/#{base_name}") do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -71,7 +80,7 @@ describe file('/var/chef/cache') do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/var/chef/cache/openssl-#{curr_ver}.tar.gz") do
+describe file "/var/chef/cache/#{archive_file(curr_ver)}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -79,7 +88,7 @@ describe file("/var/chef/cache/openssl-#{curr_ver}.tar.gz") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/usr/local/openssl-dl/openssl-#{prev_ver}.tar.gz") do
+describe file "/usr/local/#{base_name}-dl/#{archive_file(prev_ver)}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -87,7 +96,7 @@ describe file("/usr/local/openssl-dl/openssl-#{prev_ver}.tar.gz") do
   it { should be_grouped_into 'bud' }
 end
 
-describe file("/var/chef/cache/openssl-#{curr_ver}") do
+describe file "/var/chef/cache/#{source_dir(curr_ver)}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o775 }
@@ -95,7 +104,7 @@ describe file("/var/chef/cache/openssl-#{curr_ver}") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/usr/local/openssl-bld/openssl-#{prev_ver}") do
+describe file "/usr/local/#{base_name}-bld/#{source_dir(prev_ver)}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o775 }
@@ -103,7 +112,7 @@ describe file("/usr/local/openssl-bld/openssl-#{prev_ver}") do
   it { should be_grouped_into 'bud' }
 end
 
-describe file("/var/chef/cache/openssl-#{curr_ver}-dl-checksum") do
+describe file("/var/chef/cache/#{base_name}-#{curr_ver}-dl-checksum") do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -111,7 +120,7 @@ describe file("/var/chef/cache/openssl-#{curr_ver}-dl-checksum") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/var/chef/cache/openssl-#{prev_ver}-dl-checksum") do
+describe file("/var/chef/cache/#{base_name}-#{prev_ver}-dl-checksum") do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -119,7 +128,7 @@ describe file("/var/chef/cache/openssl-#{prev_ver}-dl-checksum") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/var/chef/cache/openssl-#{curr_ver}-src-checksum") do
+describe file("/var/chef/cache/#{base_name}-#{curr_ver}-src-checksum") do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -127,7 +136,7 @@ describe file("/var/chef/cache/openssl-#{curr_ver}-src-checksum") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/var/chef/cache/openssl-#{prev_ver}-src-checksum") do
+describe file("/var/chef/cache/#{base_name}-#{prev_ver}-src-checksum") do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -135,7 +144,7 @@ describe file("/var/chef/cache/openssl-#{prev_ver}-src-checksum") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/var/chef/cache/openssl-#{curr_ver}/README") do
+describe file "/var/chef/cache/#{source_dir(curr_ver)}/README" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o664 }
@@ -143,7 +152,7 @@ describe file("/var/chef/cache/openssl-#{curr_ver}/README") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/usr/local/openssl-bld/openssl-#{prev_ver}/README") do
+describe file "/usr/local/#{base_name}-bld/#{source_dir(prev_ver)}/README" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o664 }
@@ -151,7 +160,7 @@ describe file("/usr/local/openssl-bld/openssl-#{prev_ver}/README") do
   it { should be_grouped_into 'bud' }
 end
 
-describe file '/opt/openssl' do
+describe file "/opt/#{base_name}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -159,7 +168,7 @@ describe file '/opt/openssl' do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/opt/openssl/#{curr_ver}") do
+describe file "/opt/#{base_name}/#{curr_ver}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -167,7 +176,7 @@ describe file("/opt/openssl/#{curr_ver}") do
   it { should be_grouped_into 'root' }
 end
 
-describe file('/usr/local/openssl') do
+describe file "/usr/local/#{base_name}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -175,7 +184,7 @@ describe file('/usr/local/openssl') do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/var/chef/cache/openssl-#{curr_ver}//Makefile") do
+describe file "/var/chef/cache/#{source_dir(curr_ver)}/Makefile" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -183,7 +192,7 @@ describe file("/var/chef/cache/openssl-#{curr_ver}//Makefile") do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/usr/local/openssl-bld/openssl-#{prev_ver}/Makefile") do
+describe file "/usr/local/#{base_name}-bld/#{source_dir(prev_ver)}/Makefile" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -193,7 +202,7 @@ end
 
 # TODO: Tests for config entries
 
-describe file "/opt/openssl/#{curr_ver}/include/openssl/opensslconf.h" do
+describe file "/opt/#{base_name}/#{curr_ver}/include/#{base_name}/#{base_name}conf.h" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -201,7 +210,7 @@ describe file "/opt/openssl/#{curr_ver}/include/openssl/opensslconf.h" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/openssl/include/openssl/opensslconf.h" do
+describe file "/usr/local/#{base_name}/include/#{base_name}/#{base_name}conf.h" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -209,7 +218,7 @@ describe file "/usr/local/openssl/include/openssl/opensslconf.h" do
   it { should be_grouped_into 'root' }
 end
 
-describe file("/opt/openssl/#{curr_ver}/lib/libssl.so") do
+describe file "/opt/#{base_name}/#{curr_ver}/lib/libssl.so" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -217,7 +226,7 @@ describe file("/opt/openssl/#{curr_ver}/lib/libssl.so") do
   it { should be_grouped_into 'root' }
 end
 
-describe file('/usr/local/openssl/lib/libssl.so') do
+describe file "/usr/local/#{base_name}/lib/libssl.so" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -225,7 +234,7 @@ describe file('/usr/local/openssl/lib/libssl.so') do
   it { should be_grouped_into 'bud' }
 end
 
-describe file("/opt/openssl/#{curr_ver}/bin/openssl") do
+describe file "/opt/#{base_name}/#{curr_ver}/bin/#{base_name}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -233,7 +242,7 @@ describe file("/opt/openssl/#{curr_ver}/bin/openssl") do
   it { should be_grouped_into 'root' }
 end
 
-describe file('/usr/local/openssl/bin/openssl') do
+describe file "/usr/local/#{base_name}/bin/#{base_name}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -241,19 +250,19 @@ describe file('/usr/local/openssl/bin/openssl') do
   it { should be_grouped_into 'bud' }
 end
 
-describe bash("/opt/openssl/#{curr_ver}/bin/openssl version") do
+describe bash "/opt/#{base_name}/#{curr_ver}/bin/#{base_name} version" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/1\.1\.1c/) }
 end
 
-describe bash('/usr/local/openssl/bin/openssl version') do
+describe bash "/usr/local/#{base_name}/bin/#{base_name} version" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/1\.1\.0k/) }
 end
 
-describe bash("/opt/openssl/#{curr_ver}/bin/openssl ciphers -v") do
+describe bash "/opt/#{base_name}/#{curr_ver}/bin/#{base_name} ciphers -v" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/TLSv1\.2/) }
@@ -264,7 +273,7 @@ describe bash("/opt/openssl/#{curr_ver}/bin/openssl ciphers -v") do
   its(:stdout) { should_not match(/SSLv1/) }
 end
 
-describe bash('/usr/local/openssl/bin/openssl ciphers -v') do
+describe bash "/usr/local/#{base_name}/bin/#{base_name} ciphers -v" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/TLSv1\.2/) }

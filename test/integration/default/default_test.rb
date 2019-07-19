@@ -2,16 +2,16 @@
 
 node = json('/opt/chef/run_record/last_chef_run_node.json')['automatic']
 
-$BASE_NAME = 'openssl'
-$CURR_VER = '1.1.1c'
-$PREV_VER = '1.1.0k'
+BASE_NAME = 'openssl'
+CURR_VER = '1.1.1c'
+PREV_VER = '1.1.0k'
 
 def archive_file(version)
-  return "#{$BASE_NAME}-#{version}.tar.gz"
+  return "#{BASE_NAME}-#{version}.tar.gz"
 end
 
 def source_dir(version)
-  return "#{$BASE_NAME}-#{version}"
+  return "#{BASE_NAME}-#{version}"
 end
 
 describe package 'gcc' do
@@ -30,7 +30,7 @@ describe package 'make' do
   it { should be_installed }
 end
 
-describe file "/usr/local/#{$BASE_NAME}-dl" do
+describe file "/usr/local/#{BASE_NAME}-dl" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -38,7 +38,7 @@ describe file "/usr/local/#{$BASE_NAME}-dl" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}-bld" do
+describe file "/usr/local/#{BASE_NAME}-bld" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -46,7 +46,7 @@ describe file "/usr/local/#{$BASE_NAME}-bld" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}" do
+describe file "/usr/local/#{BASE_NAME}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -80,7 +80,7 @@ describe file '/var/chef/cache' do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/var/chef/cache/#{archive_file($CURR_VER)}" do
+describe file "/var/chef/cache/#{archive_file(CURR_VER)}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -88,7 +88,7 @@ describe file "/var/chef/cache/#{archive_file($CURR_VER)}" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}-dl/#{archive_file($PREV_VER)}" do
+describe file "/usr/local/#{BASE_NAME}-dl/#{archive_file(PREV_VER)}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -96,7 +96,7 @@ describe file "/usr/local/#{$BASE_NAME}-dl/#{archive_file($PREV_VER)}" do
   it { should be_grouped_into 'bud' }
 end
 
-describe file "/var/chef/cache/#{source_dir($CURR_VER)}" do
+describe file "/var/chef/cache/#{source_dir(CURR_VER)}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o775 }
@@ -104,7 +104,7 @@ describe file "/var/chef/cache/#{source_dir($CURR_VER)}" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}-bld/#{source_dir($PREV_VER)}" do
+describe file "/usr/local/#{BASE_NAME}-bld/#{source_dir(PREV_VER)}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o775 }
@@ -112,7 +112,7 @@ describe file "/usr/local/#{$BASE_NAME}-bld/#{source_dir($PREV_VER)}" do
   it { should be_grouped_into 'bud' }
 end
 
-describe file "/var/chef/cache/#{$BASE_NAME}-#{$CURR_VER}-dl-checksum" do
+describe file "/var/chef/cache/#{BASE_NAME}-#{CURR_VER}-dl-checksum" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -120,7 +120,7 @@ describe file "/var/chef/cache/#{$BASE_NAME}-#{$CURR_VER}-dl-checksum" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/var/chef/cache/#{$BASE_NAME}-#{$PREV_VER}-dl-checksum" do
+describe file "/var/chef/cache/#{BASE_NAME}-#{PREV_VER}-dl-checksum" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -128,7 +128,7 @@ describe file "/var/chef/cache/#{$BASE_NAME}-#{$PREV_VER}-dl-checksum" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/var/chef/cache/#{$BASE_NAME}-#{$CURR_VER}-src-checksum" do
+describe file "/var/chef/cache/#{BASE_NAME}-#{CURR_VER}-src-checksum" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -136,7 +136,7 @@ describe file "/var/chef/cache/#{$BASE_NAME}-#{$CURR_VER}-src-checksum" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/var/chef/cache/#{$BASE_NAME}-#{$PREV_VER}-src-checksum" do
+describe file "/var/chef/cache/#{BASE_NAME}-#{PREV_VER}-src-checksum" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -144,7 +144,7 @@ describe file "/var/chef/cache/#{$BASE_NAME}-#{$PREV_VER}-src-checksum" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/var/chef/cache/#{source_dir($CURR_VER)}/README" do
+describe file "/var/chef/cache/#{source_dir(CURR_VER)}/README" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o664 }
@@ -152,7 +152,7 @@ describe file "/var/chef/cache/#{source_dir($CURR_VER)}/README" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}-bld/#{source_dir($PREV_VER)}/README" do
+describe file "/usr/local/#{BASE_NAME}-bld/#{source_dir(PREV_VER)}/README" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o664 }
@@ -160,7 +160,7 @@ describe file "/usr/local/#{$BASE_NAME}-bld/#{source_dir($PREV_VER)}/README" do
   it { should be_grouped_into 'bud' }
 end
 
-describe file "/opt/#{$BASE_NAME}" do
+describe file "/opt/#{BASE_NAME}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -168,7 +168,7 @@ describe file "/opt/#{$BASE_NAME}" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}" do
+describe file "/opt/#{BASE_NAME}/#{CURR_VER}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -176,7 +176,7 @@ describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}" do
+describe file "/usr/local/#{BASE_NAME}" do
   it { should exist }
   it { should be_directory }
   it { should be_mode 0o755 }
@@ -184,7 +184,7 @@ describe file "/usr/local/#{$BASE_NAME}" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/var/chef/cache/#{source_dir($CURR_VER)}/Makefile" do
+describe file "/var/chef/cache/#{source_dir(CURR_VER)}/Makefile" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -192,7 +192,7 @@ describe file "/var/chef/cache/#{source_dir($CURR_VER)}/Makefile" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}-bld/#{source_dir($PREV_VER)}/Makefile" do
+describe file "/usr/local/#{BASE_NAME}-bld/#{source_dir(PREV_VER)}/Makefile" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -202,7 +202,7 @@ end
 
 # TODO: Tests for config entries
 
-describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}/include/#{$BASE_NAME}/#{$BASE_NAME}conf.h" do
+describe file "/opt/#{BASE_NAME}/#{CURR_VER}/include/#{BASE_NAME}/#{BASE_NAME}conf.h" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -210,7 +210,7 @@ describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}/include/#{$BASE_NAME}/#{$BASE_NAM
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}/include/#{$BASE_NAME}/#{$BASE_NAME}conf.h" do
+describe file "/usr/local/#{BASE_NAME}/include/#{BASE_NAME}/#{BASE_NAME}conf.h" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o644 }
@@ -218,7 +218,7 @@ describe file "/usr/local/#{$BASE_NAME}/include/#{$BASE_NAME}/#{$BASE_NAME}conf.
   it { should be_grouped_into 'bud' }
 end
 
-describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}/lib/libssl.so" do
+describe file "/opt/#{BASE_NAME}/#{CURR_VER}/lib/libssl.so" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -226,7 +226,7 @@ describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}/lib/libssl.so" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}/lib/libssl.so" do
+describe file "/usr/local/#{BASE_NAME}/lib/libssl.so" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -234,7 +234,7 @@ describe file "/usr/local/#{$BASE_NAME}/lib/libssl.so" do
   it { should be_grouped_into 'bud' }
 end
 
-describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}/bin/#{$BASE_NAME}" do
+describe file "/opt/#{BASE_NAME}/#{CURR_VER}/bin/#{BASE_NAME}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -242,7 +242,7 @@ describe file "/opt/#{$BASE_NAME}/#{$CURR_VER}/bin/#{$BASE_NAME}" do
   it { should be_grouped_into 'root' }
 end
 
-describe file "/usr/local/#{$BASE_NAME}/bin/#{$BASE_NAME}" do
+describe file "/usr/local/#{BASE_NAME}/bin/#{BASE_NAME}" do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }
@@ -250,19 +250,19 @@ describe file "/usr/local/#{$BASE_NAME}/bin/#{$BASE_NAME}" do
   it { should be_grouped_into 'bud' }
 end
 
-describe bash "/opt/#{$BASE_NAME}/#{$CURR_VER}/bin/#{$BASE_NAME} version" do
+describe bash "/opt/#{BASE_NAME}/#{CURR_VER}/bin/#{BASE_NAME} version" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/1\.1\.1c/) }
 end
 
-describe bash "/usr/local/#{$BASE_NAME}/bin/#{$BASE_NAME} version" do
+describe bash "/usr/local/#{BASE_NAME}/bin/#{BASE_NAME} version" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/1\.1\.0k/) }
 end
 
-describe bash "/opt/#{$BASE_NAME}/#{$CURR_VER}/bin/#{$BASE_NAME} ciphers -v" do
+describe bash "/opt/#{BASE_NAME}/#{CURR_VER}/bin/#{BASE_NAME} ciphers -v" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/TLSv1\.2/) }
@@ -273,7 +273,7 @@ describe bash "/opt/#{$BASE_NAME}/#{$CURR_VER}/bin/#{$BASE_NAME} ciphers -v" do
   its(:stdout) { should_not match(/SSLv1/) }
 end
 
-describe bash "/usr/local/#{$BASE_NAME}/bin/#{$BASE_NAME} ciphers -v" do
+describe bash "/usr/local/#{BASE_NAME}/bin/#{BASE_NAME} ciphers -v" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
   its(:stdout) { should match(/TLSv1\.2/) }

@@ -26,7 +26,7 @@ module OpenSslInstall
     end
 
     def download_url(new_resource)
-      return "https://www.openssl.org/source/#{archive_file_name(new_resource.version)}"
+      return "https://www.openssl.org/source/#{archive_file_name(new_resource)}"
     end
 
     def archive_root_directory(new_resource)
@@ -38,6 +38,7 @@ module OpenSslInstall
     end
 
     def post_build_logic(_install_directory, _new_resource)
+      # Call custom logic here
     end
 
     def create_default_directories
@@ -62,7 +63,7 @@ module OpenSslInstall
 
     def path_to_download_file(new_resource)
       directory = path_to_download_directory(new_resource)
-      file = File.join(directory, archive_file_name(new_resource.version))
+      file = File.join(directory, archive_file_name(new_resource))
       return file
     end
 
@@ -106,7 +107,7 @@ module OpenSslInstall
     def extract_command(filename)
       return 'unzip -q' if filename.match?(/\.zip/)
 
-      return 'tar xzf' if filename.match?(/\.tar\.gz/)
+      return 'tar xzf' if filename.match?(/\.(:?tar\.gz|tgz)/)
 
       raise "Archive not supported: #{filename}"
     end

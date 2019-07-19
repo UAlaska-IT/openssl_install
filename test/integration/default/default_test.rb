@@ -151,6 +151,14 @@ describe file("/usr/local/openssl-bld/openssl-#{prev_ver}/README") do
   it { should be_grouped_into 'bud' }
 end
 
+describe file '/opt/openssl' do
+  it { should exist }
+  it { should be_directory }
+  it { should be_mode 0o755 }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+end
+
 describe file("/opt/openssl/#{curr_ver}") do
   it { should exist }
   it { should be_directory }
@@ -185,6 +193,22 @@ end
 
 # TODO: Tests for config entries
 
+describe file "/opt/openssl/#{curr_ver}/include/openssl/opensslconf.h" do
+  it { should exist }
+  it { should be_file }
+  it { should be_mode 0o644 }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+end
+
+describe file "/usr/local/openssl/include/openssl/opensslconf.h" do
+  it { should exist }
+  it { should be_file }
+  it { should be_mode 0o644 }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+end
+
 describe file("/opt/openssl/#{curr_ver}/lib/libssl.so") do
   it { should exist }
   it { should be_file }
@@ -194,6 +218,22 @@ describe file("/opt/openssl/#{curr_ver}/lib/libssl.so") do
 end
 
 describe file('/usr/local/openssl/lib/libssl.so') do
+  it { should exist }
+  it { should be_file }
+  it { should be_mode 0o755 }
+  it { should be_owned_by 'bud' }
+  it { should be_grouped_into 'bud' }
+end
+
+describe file("/opt/openssl/#{curr_ver}/bin/openssl") do
+  it { should exist }
+  it { should be_file }
+  it { should be_mode 0o755 }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+end
+
+describe file('/usr/local/openssl/bin/openssl') do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o755 }

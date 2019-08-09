@@ -22,7 +22,7 @@ module OpenSslInstall
   module Install
     # Hooks for install
 
-    def create_config_code(install_directory, new_resource)
+    def configuration_command(install_directory, new_resource)
       code = './config shared'
       code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
       code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
@@ -43,7 +43,7 @@ module OpenSslInstall
       return "#{base_name(new_resource)}-#{new_resource.version}.tar.gz"
     end
 
-    def download_url(new_resource)
+    def download_base_url(new_resource)
       return "https://www.openssl.org/source/#{archive_file_name(new_resource)}"
     end
 
@@ -51,7 +51,7 @@ module OpenSslInstall
       return "#{base_name(new_resource)}-#{new_resource.version}"
     end
 
-    def bin_creates_file(_new_resource)
+    def install_creates_file(_new_resource)
       return 'bin/openssl'
     end
 

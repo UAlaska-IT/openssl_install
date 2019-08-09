@@ -42,12 +42,12 @@ module OpenSslInstall
       return 'README'
     end
 
-    def configuration_command(install_directory, new_resource)
+    def configuration_command(new_resource)
       code = './config shared'
-      code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
+      code += " -Wl,-rpath=#{File.join(new_resource.install_directory, 'lib')}"
       code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
-      code += " --prefix=#{install_directory}"
-      code += " --openssldir=#{install_directory}"
+      code += " --prefix=#{new_resource.install_directory}"
+      code += " --openssldir=#{new_resource.install_directory}"
       return code
     end
 
@@ -59,7 +59,7 @@ module OpenSslInstall
       return 'make install'
     end
 
-    def post_install_logic(_install_directory, _new_resource)
+    def post_install_logic(_new_resource)
       # Call custom logic here
     end
 

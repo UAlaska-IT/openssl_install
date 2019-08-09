@@ -4,6 +4,14 @@
 module OpenSslInstall
   # This module exposes helpers to the client
   module Public
+    def default_openssl_version
+      return '1.1.1c'
+    end
+
+    def default_openssl_directory
+      return "opt/openssl#{default_openssl_version}"
+    end
+  end
   # This module implements custom logic for this installer
   def Custom
   end

@@ -20,6 +20,8 @@ module OpenSslInstall
   end
   # This module implements helpers that are used for resources
   module Install
+    # Hooks for install
+
     def create_config_code(install_directory, new_resource)
       code = './config shared'
       code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
@@ -53,9 +55,15 @@ module OpenSslInstall
       return 'bin/openssl'
     end
 
+    def install_command(_new_resource)
+      return 'make install'
+    end
+
     def post_build_logic(_install_directory, _new_resource)
       # Call custom logic here
     end
+
+    # Common install code
 
     def create_default_directories
       directory '/var/chef' do
@@ -235,9 +243,9 @@ module OpenSslInstall
       end
     end
 
-    def execute_install(build_directory, bin_file)
+    def execute_install(build_directory, bin_file, new_resource)
       bash 'Install' do
-        code 'make install'
+        code install_command(new_resource)
         cwd build_directory
         # Run as root in case it is installing in directory without write access
         creates bin_file
@@ -299,7 +307,7 @@ module OpenSslInstall
 
     def make_build(build_directory, install_directory, bin_file, new_resource)
       execute_build(build_directory, bin_file, new_resource)
-      execute_install(build_directory, bin_file)
+      execute_install(build_directory, bin_file, new_resource)
       set_install_permissions(build_directory, install_directory, new_resource)
     end
 

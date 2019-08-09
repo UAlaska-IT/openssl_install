@@ -26,19 +26,6 @@ module OpenSslInstall
       return 'openssl'
     end
 
-    def configuration_command(install_directory, new_resource)
-      code = './config shared'
-      code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
-      code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
-      code += " --prefix=#{install_directory}"
-      code += " --openssldir=#{install_directory}"
-      return code
-    end
-
-    def extract_creates_file(_new_resource)
-      return 'README'
-    end
-
     def archive_file_name(new_resource)
       return "#{base_name(new_resource)}-#{new_resource.version}.tar.gz"
     end
@@ -49,6 +36,19 @@ module OpenSslInstall
 
     def archive_root_directory(new_resource)
       return "#{base_name(new_resource)}-#{new_resource.version}"
+    end
+
+    def extract_creates_file(_new_resource)
+      return 'README'
+    end
+
+    def configuration_command(install_directory, new_resource)
+      code = './config shared'
+      code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
+      code += ' no-ssl2 no-ssl3 no-weak-ssl-ciphers' if new_resource.strict_security
+      code += " --prefix=#{install_directory}"
+      code += " --openssldir=#{install_directory}"
+      return code
     end
 
     def install_creates_file(_new_resource)

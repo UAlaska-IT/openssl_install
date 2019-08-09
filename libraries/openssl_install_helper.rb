@@ -2,8 +2,16 @@
 
 # This module implements helpers that are used for resources
 module OpenSslInstall
+  # This module exposes helpers to the client
+  module Public
+  # This module implements custom logic for this installer
+  def Custom
+  end
+  # This module implements hooks into the base install
+  def Hook
+  end
   # This module implements helpers that are used for resources
-  module Helper
+  module Install
     def create_config_code(install_directory, new_resource)
       code = './config shared'
       code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"

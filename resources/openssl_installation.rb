@@ -18,5 +18,5 @@ action :create do
 end
 
 action_class do
-  include OpenSslInstall::Helper
+  include OpenSslInstall::Install
 end

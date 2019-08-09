@@ -22,6 +22,10 @@ module OpenSslInstall
   module Install
     # Hooks for install
 
+    def base_name(_new_resource)
+      return 'openssl'
+    end
+
     def configuration_command(install_directory, new_resource)
       code = './config shared'
       code += " -Wl,-rpath=#{File.join(install_directory, 'lib')}"
@@ -29,10 +33,6 @@ module OpenSslInstall
       code += " --prefix=#{install_directory}"
       code += " --openssldir=#{install_directory}"
       return code
-    end
-
-    def base_name(_new_resource)
-      return 'openssl'
     end
 
     def extract_creates_file(_new_resource)

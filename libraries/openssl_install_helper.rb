@@ -31,7 +31,7 @@ module OpenSslInstall
     end
 
     def download_base_url(new_resource)
-      return "https://www.openssl.org/source/#{archive_file_name(new_resource)}"
+      return 'https://www.openssl.org/source'
     end
 
     def archive_root_directory(new_resource)

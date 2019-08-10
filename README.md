@@ -61,8 +61,10 @@ One action is provided.
 
 __Attributes__
 
-* `version` - Defaults to `'1.1.1c'`.
+* `version` - Defaults to `nil`.
 The version of OpenSSL to install.
+If nil, will default to the latest version when this cookbook was updated.
+The helper `default_openssl_version` is provided for fetching this value.
 * `download_directory` - Defaults to `nil`.
 The local path to the directory into which to download the source archive.
 See note below about paths.
@@ -112,8 +114,8 @@ openssl_installation 'No Defaults' do
   download_directory '/usr/local/openssl-dl'
   build_directory '/usr/local/openssl-bld'
   install_directory '/usr/local/openssl'
-  owner 'some-dudette'
-  group 'some-dudettes'
+  owner 'some-dude'
+  group 'some-dudes'
   strict_security false
 end
 ```

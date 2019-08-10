@@ -26,6 +26,10 @@ module OpenSslInstall
       return 'openssl'
     end
 
+    def default_version(_new_resource)
+      return default_openssl_version
+    end
+
     def archive_file_name(new_resource)
       return "#{base_name(new_resource)}-#{new_resource.version}.tar.gz"
     end

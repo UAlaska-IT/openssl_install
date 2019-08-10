@@ -9,7 +9,8 @@ module OpenSslInstall
     end
 
     def default_openssl_directory
-      return "opt/openssl#{default_openssl_version}"
+      # Must match base_install
+      return "opt/openssl/#{default_openssl_version}"
     end
   end
   # This module implements custom logic for this installer

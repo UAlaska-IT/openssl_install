@@ -71,3 +71,7 @@ module OpenSslInstall
     # For common install code see base_install cookbook
   end
 end
+
+Chef::Provider.include(OpenSslInstall::Public)
+Chef::Recipe.include(OpenSslInstall::Public)
+Chef::Resource.include(OpenSslInstall::Public)

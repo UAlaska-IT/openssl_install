@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'source_install'
+
 # This module implements helpers that are used for resources
 module OpenSslInstall
   # This module exposes helpers to the client
@@ -9,12 +11,15 @@ module OpenSslInstall
     end
 
     def default_openssl_directory
-      # Must match base_install
+      # Must match source_install
       return "opt/openssl/#{default_openssl_version}"
     end
   end
+
   # This module implements helpers that are used for resources
   module Install
+    extend Source::Install
+
     # Hooks for install
 
     def base_name(_new_resource)
@@ -62,7 +67,7 @@ module OpenSslInstall
       # Call custom logic here
     end
 
-    # For common install code see base_install cookbook
+    # For common install code see source_install cookbook
   end
 end
 

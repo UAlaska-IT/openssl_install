@@ -18,7 +18,7 @@ module OpenSslInstall
 
   # This module implements helpers that are used for resources
   module Install
-    extend Source::Install
+    include Source::Install
 
     # Hooks for install
 

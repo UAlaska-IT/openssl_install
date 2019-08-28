@@ -5,7 +5,7 @@ provides :openssl_installation
 
 default_action :create
 
-property :version, String, default: '1.1.1c'
+property :version, [String, nil], default: nil
 property :download_directory, [String, nil], default: nil
 property :build_directory, [String, nil], default: nil
 property :install_directory, [String, nil], default: nil
@@ -18,5 +18,5 @@ action :create do
 end
 
 action_class do
-  include OpenSslInstall::Helper
+  include OpenSslInstall::Install
 end

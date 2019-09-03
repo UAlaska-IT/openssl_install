@@ -12,7 +12,7 @@ module OpenSslInstall
 
     def default_openssl_directory
       # Must match source_install
-      return "opt/openssl/#{default_openssl_version}"
+      return "/opt/openssl/#{default_openssl_version}"
     end
   end
 

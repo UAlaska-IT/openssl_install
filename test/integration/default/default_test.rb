@@ -253,13 +253,13 @@ end
 describe bash "/opt/#{BASE_NAME}/#{CURR_VER}/bin/#{BASE_NAME} version" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
-  its(:stdout) { should match(/1\.1\.1c/) }
+  its(:stdout) { should match(/1\.1\.1d/) }
 end
 
 describe bash "/usr/local/#{BASE_NAME}/bin/#{BASE_NAME} version" do
   its(:exit_status) { should eq 0 }
   its(:stderr) { should eq '' }
-  its(:stdout) { should match(/1\.1\.0k/) }
+  its(:stdout) { should match(/1\.1\.0l/) }
 end
 
 describe bash "/opt/#{BASE_NAME}/#{CURR_VER}/bin/#{BASE_NAME} ciphers -v" do

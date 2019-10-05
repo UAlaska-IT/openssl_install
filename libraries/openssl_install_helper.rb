@@ -7,7 +7,7 @@ module OpenSslInstall
   # This module exposes helpers to the client
   module Public
     def default_openssl_version
-      return '1.1.1c'
+      return '1.1.1d'
     end
 
     def default_openssl_directory

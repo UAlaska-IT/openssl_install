@@ -3,8 +3,8 @@
 node = json('/opt/chef/run_record/last_chef_run_node.json')['automatic']
 
 BASE_NAME = 'openssl'
-CURR_VER = '1.1.1c'
-PREV_VER = '1.1.0k'
+CURR_VER = '1.1.1d'
+PREV_VER = '1.1.0l'
 
 def archive_file(version)
   return "#{BASE_NAME}-#{version}.tar.gz"

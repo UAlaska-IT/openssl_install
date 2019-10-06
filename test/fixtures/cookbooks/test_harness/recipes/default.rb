@@ -4,22 +4,16 @@ include_recipe 'openssl_install::default'
 
 openssl_installation 'All Defaults'
 
-directory '/usr/local/openssl-dl' do
-  user 'root'
-  group 'root'
-  mode 0o755
-end
-
-directory '/usr/local/openssl-bld' do
-  user 'root'
-  group 'root'
-  mode 0o755
-end
-
-directory '/usr/local/openssl' do
-  user 'root'
-  group 'root'
-  mode 0o755
+[
+  '/usr/local/openssl-dl',
+  '/usr/local/openssl-bld',
+  '/usr/local/openssl'
+].each do |dir|
+  directory dir do
+    user 'root'
+    group 'root'
+    mode 0o755
+  end
 end
 
 user 'bud' do

@@ -7,7 +7,7 @@ module OpenSslInstall
   # This module exposes helpers to the client
   module Public
     def default_openssl_version
-      return '1.1.1c'
+      return '1.1.1d'
     end
 
     def default_openssl_directory
@@ -63,11 +63,7 @@ module OpenSslInstall
       return 'make install'
     end
 
-    def post_install_logic(_new_resource)
-      # Call custom logic here
-    end
-
-    # For common install code see source_install cookbook
+    # For optional hooks and common install code see source_install cookbook
   end
 end
 

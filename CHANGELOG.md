@@ -1,5 +1,9 @@
 # Changelog for OpenSSL Install Cookbook
 
+## 1.2.0
+
+* Update default version of OpenSSL
+
 ## 1.1.1
 
 * Fixed absolute default path

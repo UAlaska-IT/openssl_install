@@ -110,7 +110,7 @@ Custom resources can be used as below.
 
 ```ruby
 openssl_installation 'No Defaults' do
-  version '1.1.0k'
+  version '1.1.0l'
   download_directory '/usr/local/openssl-dl'
   build_directory '/usr/local/openssl-bld'
   install_directory '/usr/local/openssl'
